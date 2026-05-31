@@ -8,6 +8,8 @@ import type {
 } from "@/types/types";
 import type { FormEvent, ReactNode } from "react";
 import { useMemo, useState } from "react";
+import { SiNextdotjs, SiReact, SiVite, SiTypescript } from "react-icons/si";
+import { ClipLoader } from "react-spinners";
 
 type AiAction =
   | "summary"
@@ -20,10 +22,10 @@ type AiAction =
 const DEFAULT_CORAL_QUERY = "SELECT *\nFROM github.repositories\nLIMIT 5";
 
 const DEMO_REPOSITORIES = [
-  { label: "Next.js", url: "https://github.com/vercel/next.js" },
-  { label: "React", url: "https://github.com/facebook/react" },
-  { label: "Vite", url: "https://github.com/vitejs/vite" },
-  { label: "TypeScript", url: "https://github.com/microsoft/TypeScript" },
+  { label: "Next.js", url: "https://github.com/vercel/next.js", icon: SiNextdotjs, color: "#000000" },
+  { label: "React", url: "https://github.com/facebook/react", icon: SiReact, color: "#61DAFB" },
+  { label: "Vite", url: "https://github.com/vitejs/vite", icon: SiVite, color: "#646CFF" },
+  { label: "TypeScript", url: "https://github.com/microsoft/TypeScript", icon: SiTypescript, color: "#3178C6" },
 ];
 
 type StatCard = {
@@ -320,6 +322,19 @@ export default function App() {
 
   return (
     <main className="min-h-screen bg-slate-100 px-5 py-8 text-slate-950 sm:px-8">
+      {(isLoading || aiLoading) && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-4 rounded-2xl bg-white p-8 shadow-2xl">
+            <ClipLoader color="#3b82f6" size={50} />
+            <p className="text-lg font-bold text-slate-900">
+              {isLoading ? "Analyzing repository..." : "Processing insights..."}
+            </p>
+            <p className="text-sm text-slate-500">
+              {isLoading ? "Fetching GitHub data" : `${aiLoading === "summary" ? "Generating summary" : aiLoading === "weekly-report" ? "Creating weekly report" : aiLoading === "priorities" ? "Prioritizing issues" : aiLoading === "duplicates" ? "Finding duplicates" : aiLoading === "release-notes" ? "Generating release notes" : "Processing"}`}
+            </p>
+          </div>
+        </div>
+      )}
       <section className="mx-auto max-w-7xl">
         <header className="border border-slate-300 bg-white p-6 shadow-sm sm:p-8">
           <p className="text-sm font-bold uppercase tracking-[0.24em] text-blue-600">
@@ -370,17 +385,21 @@ export default function App() {
             <span className="text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
               Demo presets
             </span>
-            {DEMO_REPOSITORIES.map((repo) => (
-              <button
-                key={repo.url}
-                type="button"
-                onClick={() => runDemoPreset(repo.url)}
-                disabled={isLoading}
-                className="border border-slate-300 bg-white px-3 py-2 text-sm font-bold text-slate-700 rounded-md transition hover:border-blue-600 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {repo.label}
-              </button>
-            ))}
+            {DEMO_REPOSITORIES.map((repo) => {
+              const IconComponent = repo.icon;
+              return (
+                <button
+                  key={repo.url}
+                  type="button"
+                  onClick={() => runDemoPreset(repo.url)}
+                  disabled={isLoading}
+                  className="flex items-center gap-2 border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-700 rounded-md transition hover:border-blue-600 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <IconComponent size={18} color={repo.color} />
+                  {repo.label}
+                </button>
+              );
+            })}
           </div>
 
           {error && (

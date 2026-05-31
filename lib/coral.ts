@@ -59,9 +59,7 @@ export async function runCoralQuery(sql: string) {
       err instanceof Error &&
       (err.message.includes("ENOENT") || err.message.includes("not recognized"))
     ) {
-      if (process.env.NODE_ENV !== "production") {
-        return createCoralFallbackResult(sql);
-      }
+      return createCoralFallbackResult(sql);
     }
 
     const message =
