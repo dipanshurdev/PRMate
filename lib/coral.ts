@@ -12,7 +12,7 @@ function createCoralFallbackResult(query: string) {
     return [{ "Int64(1)": 1 }];
   }
 
-  if (cleanQuery.includes("FROM GITHUB.REPOSITORIES")) {
+  if (cleanQuery.includes("FROM") && cleanQuery.includes("REPOSITORIES")) {
     return [
       {
         full_name: "vercel/next.js",
@@ -57,7 +57,9 @@ export async function runCoralQuery(sql: string) {
   } catch (err) {
     if (
       err instanceof Error &&
-      (err.message.includes("ENOENT") || err.message.includes("not recognized"))
+      (err.message.includes("ENOENT") || 
+       err.message.includes("not recognized") || 
+       err.message.includes("command not found"))
     ) {
       return createCoralFallbackResult(sql);
     }
