@@ -346,7 +346,10 @@ export default function App() {
                 OSS First Mate
               </h1>
               <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
-                Analyze GitHub activity, summarize maintainer workload, rank
+                <span className="bg-gradient-to-r from-neutral-700 to-neutral-900 bg-clip-text text-transparent font-bold">
+                    PRMate 
+                    </span> {" "}
+                    Analyze GitHub activity, summarize maintainer workload, rank
                 priority issues, detect duplicates, generate release notes, and
                 create weekly maintainer reports.
               </p>
@@ -734,7 +737,7 @@ export default function App() {
             </div>
             <div className="border border-blue-200 bg-blue-50 p-5">
               <h3 className="text-xl font-black text-blue-950">
-                OSS First Mate automates these workflows.
+                PRMate automates these workflows.
               </h3>
               <p className="mt-4 leading-7 text-blue-900">
                 It combines GitHub activity, Gemini reasoning, and Coral SQL to
@@ -752,7 +755,7 @@ export default function App() {
             GitHub: <a href="https://github.com/dipanshurdev" target="_blank" rel="noreferrer" className="font-semibold text-blue-300 hover:text-blue-200">github.com/dipanshurdev</a>
           </p>
           <p className="mt-3 text-slate-400">
-            OSS First Mate is a hackathon demo for open-source maintainer intelligence.
+            PRMate is a hackathon demo for open-source maintainer intelligence.
           </p>
         </footer>
       </section>

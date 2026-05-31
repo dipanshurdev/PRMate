@@ -1,8 +1,8 @@
-# OSS First Mate
+# PRMate (OSS First Mate)
 
 Coral-powered repository intelligence for open-source maintainers.
 
-OSS First Mate turns GitHub repository activity into actionable maintainer insights using Gemini, Coral SQL, and the GitHub API.
+PRMate turns GitHub repository activity into actionable maintainer insights using Gemini, Coral SQL, and the GitHub API.
 
 ## Problem
 
@@ -19,7 +19,7 @@ That work is valuable, but it is repetitive and often slows down maintainers who
 
 ## Solution
 
-OSS First Mate analyzes repository activity and generates a maintainer-ready dashboard:
+PRMate analyzes repository activity and generates a maintainer-ready dashboard:
 
 - health score
 - weekly maintainer report
@@ -133,7 +133,7 @@ LIMIT 5
 
 Explain:
 
-Coral provides a unified SQL interface over GitHub data. OSS First Mate combines Coral + Gemini + GitHub to turn repository activity into actionable maintainer insights.
+Coral provides a unified SQL interface over GitHub data. PRMate combines Coral + Gemini + GitHub to turn repository activity into actionable maintainer insights.
 
 ## Getting Started
 
