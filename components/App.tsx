@@ -378,7 +378,7 @@ export default function App() {
             <button
               type="submit"
               disabled={isLoading}
-              className="min-h-14 bg-gradient-to-r from-blue-700 to-indigo-600 px-6 font-bold text-white rounded-md shadow hover:from-blue-600 hover:to-indigo-500 transition transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+              className="min-h-14 font-bold text-white rounded-none shadow bg-blue-950 transition transform hover:-translate-y-0.5 px-2.5 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
             >
               {isLoading ? "Analyzing..." : "Analyze Repository"}
             </button>
@@ -396,7 +396,7 @@ export default function App() {
                   type="button"
                   onClick={() => runDemoPreset(repo.url)}
                   disabled={isLoading}
-                  className="flex items-center gap-2 border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-700 rounded-md transition hover:border-blue-600 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex cursor-pointer items-center gap-2 border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-700 rounded-none transition hover:border-blue-600 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <IconComponent size={18} color={repo.color} />
                   {repo.label}
@@ -811,7 +811,7 @@ function ActionButton({
       type="button"
       disabled={disabled}
       onClick={onClick}
-      className="bg-gradient-to-r from-blue-700 to-indigo-600 px-5 py-3 text-sm font-bold text-white rounded-md shadow hover:from-blue-600 hover:to-indigo-500 transition transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+      className=" px-5 py-3 cursor-pointer text-sm font-bold text-white rounded-none shadow bg-blue-950 transition transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
     >
       {loading ? "Working..." : children}
     </button>
