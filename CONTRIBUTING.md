@@ -42,6 +42,8 @@ npm run format:check
 npm run lint
 ```
 
+**Note:** Test infrastructure files are included but testing dependencies are not installed due to React 19 compatibility requirements. To enable testing, install React 19-compatible testing libraries or downgrade to React 18.
+
 ## Project Structure
 
 ```

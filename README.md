@@ -310,6 +310,8 @@ npm run format:check
 npm run build
 ```
 
+**Note:** Test infrastructure is available but not included in dependencies due to React 19 compatibility. To enable testing, install compatible testing libraries manually or use React 18 compatible versions.
+
 ## 🚢 Deployment
 
 ### Vercel
