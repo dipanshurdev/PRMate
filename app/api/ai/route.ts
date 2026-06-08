@@ -72,8 +72,10 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  let body: AiRequest | undefined;
+  
   try {
-    const body = (await req.json()) as AiRequest;
+    body = (await req.json()) as AiRequest;
 
     // Validate AI action
     if (body.action) {
@@ -193,7 +195,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ error: "Unknown AI action." }, { status: 400 });
   } catch (error) {
-    logger.logApiError('POST', '/api/ai', error instanceof Error ? error : new Error(String(error)), { action: (await req.json()).action });
+    logger.logApiError('POST', '/api/ai', error instanceof Error ? error : new Error(String(error)), { action: body?.action });
     return NextResponse.json(
       {
         error:

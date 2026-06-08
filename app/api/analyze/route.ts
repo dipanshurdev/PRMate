@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
       }
     });
   } catch (error) {
-    logger.logApiError('POST', '/api/analyze', error instanceof Error ? error : new Error(String(error)), { owner, repo });
+    logger.logApiError('POST', '/api/analyze', error instanceof Error ? error : new Error(String(error)));
     return NextResponse.json(
       { error: "Unable to analyze this repository." },
       { status: 500 },
