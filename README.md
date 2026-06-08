@@ -1,8 +1,45 @@
-# PRMate (OSS First Mate)
+# PRMate
 
 Coral-powered repository intelligence for open-source maintainers.
 
 PRMate turns GitHub repository activity into actionable maintainer insights using Gemini, Coral SQL, and the GitHub API.
+
+## 🚀 Features
+
+- **Repository Health Score** — combines open issues and merged PRs into a fast 0–100 signal
+- **AI Weekly Summary** — summarizes themes, risks, priorities, and suggested actions
+- **Weekly Maintainer Report** — generates a markdown report with health, wins, risks, contributors to watch, and recommended actions
+- **AI Issue Prioritization** — ranks top issues by impact, severity, and urgency
+- **Duplicate Issue Detection** — finds duplicate or near-duplicate issue reports
+- **AI Release Notes** — generates grouped release notes from merged PRs
+- **Ask Repository** — asks questions against the fetched GitHub activity snapshot
+- **Coral Repository Explorer** — runs SQL through Coral against GitHub-backed data
+- **Demo Repository Presets** — one-click analysis for Next.js, React, Vite, and TypeScript
+
+## 🔒 Security Features
+
+PRMate implements several security best practices to ensure safe production use:
+
+- **Environment Variable Validation** — All required API keys are validated at startup
+- **Rate Limiting** — API endpoints are rate-limited to prevent abuse
+- **Input Validation & Sanitization** — All user inputs are validated and sanitized
+- **CORS Configuration** — Proper CORS headers for secure cross-origin requests
+- **Security Headers** — Implements X-Frame-Options, X-Content-Type-Options, and other security headers
+- **Request Timeouts** — All external API calls have appropriate timeout handling
+- **SQL Injection Prevention** — Coral queries are validated to only allow SELECT statements
+- **Error Logging** — Comprehensive error logging for debugging and monitoring
+- **Health Check Endpoint** — Monitor service status and dependencies
+
+## 🛠 Tech Stack
+
+- **Next.js 16** — React framework with app router
+- **React 19** — UI library
+- **TypeScript** — Type-safe development
+- **Gemini AI** — AI-powered insights
+- **Coral SQL** — SQL interface over GitHub data
+- **GitHub API** — Repository data source
+- **Tailwind CSS** — Styling
+- **Octokit** — GitHub API client
 
 ## Problem
 
@@ -166,10 +203,160 @@ Open:
 
 - dashboard: `http://localhost:3000`
 - Coral Repository Explorer: `http://localhost:3000/coral`
+- Health check: `http://localhost:3000/api/health`
 
-## Validation
+## 🔐 Security Best Practices
+
+### API Keys Management
+
+- Never commit `.env.local` or any files containing real API keys
+- Use different API keys for development and production
+- Rotate API keys regularly
+- Use environment-specific API keys with minimal required permissions
+
+### GitHub Token Setup
+
+1. Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Generate a new token with `public_repo` scope (for public repositories)
+3. Store the token securely in your environment variables
+
+### Gemini API Key Setup
+
+1. Go to Google AI Studio → API Keys
+2. Create a new API key
+3. Store the key securely in your environment variables
+
+### Production Deployment
+
+For production deployment:
+
+1. Use environment-specific configuration
+2. Enable additional security headers
+3. Set up monitoring and alerting
+4. Use HTTPS only
+5. Implement proper authentication if needed
+6. Regular security audits
+7. Keep dependencies updated
+
+### Rate Limits
+
+The application implements the following rate limits:
+- `/api/analyze`: 30 requests per minute per IP
+- `/api/ai`: 50 requests per minute per IP
+- `/api/coral`: 20 requests per minute per IP
+
+## 📊 Monitoring
+
+### Health Check
+
+Monitor the application health using the `/api/health` endpoint:
 
 ```bash
+curl http://localhost:3000/api/health
+```
+
+Response includes:
+- Service status
+- Configuration status
+- Environment information
+
+### Logging
+
+The application uses structured logging for:
+- API requests
+- Errors
+- Rate limit violations
+- Performance metrics
+
+## 🧪 Validation
+
+```bash
+# Lint code
 npm run lint
+
+# Format code
+npm run format
+
+# Check code formatting
+npm run format:check
+
+# Build for production
 npm run build
 ```
+
+## 🚢 Deployment
+
+### Vercel
+
+1. Push your code to GitHub
+2. Import the project in Vercel
+3. Add environment variables in Vercel dashboard:
+   - `GITHUB_TOKEN`
+   - `GEMINI_API_KEY`
+   - `CORAL_PATH` (optional)
+   - `NODE_ENV=production`
+4. Deploy
+
+### Docker
+
+Create a `Dockerfile`:
+
+```dockerfile
+FROM node:20-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+# Production image
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV production
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+Build and run:
+
+```bash
+docker build -t prmate .
+docker run -p 3000:3000 --env-file .env.local prmate
+```
+
+### Environment Variables for Production
+
+```env
+GITHUB_TOKEN=your_production_github_token
+GEMINI_API_KEY=your_production_gemini_key
+NODE_ENV=production
+CORAL_PATH=/usr/local/bin/coral  # if using Coral
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with [Next.js](https://nextjs.org/)
+- Powered by [Gemini AI](https://ai.google.dev/)
+- SQL interface by [Coral](https://coral.sh/)
+- Repository data from [GitHub API](https://docs.github.com/en/rest)

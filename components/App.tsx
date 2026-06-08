@@ -448,6 +448,7 @@ export default function App() {
                     </p>
                     <p className="mt-4 text-5xl font-black">
                       {stat.value.toLocaleString()}
+                      {stat.value ? "+" : ""}
                     </p>
                   </div>
                   <span className="bg-slate-950 px-3 py-1 text-xs font-black text-white">

@@ -1,8 +1,12 @@
 import type { GitHubCommit, GitHubIssue, GitHubPull, RepoData } from "@/types/types";
 import { Octokit } from "octokit";
+import { env } from "@/lib/env";
 
 const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
+  auth: env.GITHUB_TOKEN,
+  request: {
+    timeout: 30000, // 30 second timeout for GitHub API requests
+  },
 });
 
 export async function getRepoData({
@@ -16,21 +20,21 @@ export async function getRepoData({
     octokit.request("GET /repos/{owner}/{repo}/issues", {
       owner,
       repo,
-      per_page: 50,
+      per_page: 200,
       state: "open",
     }),
 
     octokit.request("GET /repos/{owner}/{repo}/pulls", {
       owner,
       repo,
-      per_page: 50,
+      per_page: 200,
       state: "all",
     }),
 
     octokit.request("GET /repos/{owner}/{repo}/commits", {
       owner,
       repo,
-      per_page: 50,
+      per_page: 200,
     }),
   ]);
 

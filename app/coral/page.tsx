@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const DEFAULT_QUERY = "SELECT * FROM github.repositories LIMIT 5";
 
@@ -42,7 +43,8 @@ export default function CoralRepositoryExplorerPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-100 px-5 py-8 text-slate-950 sm:px-8">
+    <ErrorBoundary>
+      <main className="min-h-screen bg-slate-100 px-5 py-8 text-slate-950 sm:px-8">
       <section className="mx-auto max-w-5xl border border-slate-300 bg-white p-6 shadow-sm sm:p-8">
         <p className="text-sm font-bold uppercase tracking-[0.24em] text-blue-600">
           Powered by Coral SQL
@@ -101,5 +103,6 @@ export default function CoralRepositoryExplorerPage() {
         </footer>
       </section>
     </main>
+    </ErrorBoundary>
   );
 }

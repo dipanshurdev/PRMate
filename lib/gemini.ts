@@ -6,18 +6,13 @@ import type {
   RepoData,
 } from "@/types/types";
 import { GoogleGenAI } from "@google/genai";
+import { env } from "@/lib/env";
 
 const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
+  apiKey: env.GEMINI_API_KEY,
 });
 
 const MODEL = "gemini-2.5-flash";
-
-function requireGeminiKey() {
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error("GEMINI_API_KEY is missing.");
-  }
-}
 
 function extractJsonArray<T>(text: string) {
   const jsonMatch = text.match(/\[[\s\S]*\]/);
@@ -30,7 +25,6 @@ function extractJsonArray<T>(text: string) {
 }
 
 export async function summarizeRepo(repoData: RepoData) {
-  requireGeminiKey();
 
   const issues = repoData.issues?.map((issue) => issue.title).filter(Boolean);
   const pulls = repoData.pulls?.map((pull) => ({
@@ -79,7 +73,6 @@ export async function generateWeeklyMaintainerReport({
   repoData: RepoData;
   healthScore: number;
 }) {
-  requireGeminiKey();
 
   const compactData = {
     repo,
@@ -144,7 +137,6 @@ ${JSON.stringify(compactData)}
 }
 
 export async function prioritizeIssues(issues: GitHubIssue[]) {
-  requireGeminiKey();
 
   if (issues.length === 0) {
     return [];
@@ -187,7 +179,6 @@ ${JSON.stringify(issueInputs)}
 }
 
 export async function findDuplicateIssues(issues: GitHubIssue[]) {
-  requireGeminiKey();
 
   if (issues.length < 2) {
     return [];
@@ -225,7 +216,6 @@ ${JSON.stringify(issueInputs)}
 }
 
 export async function generateReleaseNotes(pulls: GitHubPull[]) {
-  requireGeminiKey();
 
   const mergedPulls = pulls
     .filter((pull) => Boolean(pull.merged_at))
@@ -258,7 +248,6 @@ ${JSON.stringify(mergedPulls)}
 }
 
 export async function askRepository(repoData: RepoData, question: string) {
-  requireGeminiKey();
 
   const compactData = {
     issues: repoData.issues?.map((issue) => ({

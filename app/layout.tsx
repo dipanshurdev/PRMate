@@ -13,8 +13,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OSS First Mate - Open Source Maintainer Intelligence",
+  title: "PRMate - Open Source Maintainer Intelligence",
   description: "Coral-powered repository intelligence for open-source maintainers. Get actionable insights on issues, pull requests, duplicates, and release notes powered by Gemini AI.",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+  },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
 };
 
 export default function RootLayout({

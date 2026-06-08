@@ -1,0 +1,24 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "GITHUB_TOKEN": {
+      "description": "GitHub API token for repository access"
+    },
+    "GEMINI_API_KEY": {
+      "description": "Gemini API key for AI features"
+    },
+    "CORAL_PATH": {
+      "description": "Optional path to Coral executable",
+      "optional": true
+    },
+    "NODE_ENV": {
+      "description": "Node environment",
+      "value": "production"
+    }
+  }
+}

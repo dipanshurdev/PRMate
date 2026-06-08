@@ -1,9 +1,10 @@
 import { execFile } from "child_process";
 import { promisify } from "util";
+import { env } from "@/lib/env";
 
 const execFileAsync = promisify(execFile);
 
-const CORAL_EXECUTABLE = process.env.CORAL_PATH ?? "coral";
+const CORAL_EXECUTABLE = env.CORAL_PATH ?? "coral";
 
 function createCoralFallbackResult(query: string) {
   const cleanQuery = query.trim().toUpperCase();
@@ -45,7 +46,9 @@ export async function runCoralQuery(sql: string) {
       CORAL_EXECUTABLE,
       ["sql", "--format", "json", sql],
       {
-        shell: true,
+        // Remove shell: true for security
+        timeout: 30000, // 30 second timeout
+        maxBuffer: 10 * 1024 * 1024, // 10MB max buffer
       },
     );
 
