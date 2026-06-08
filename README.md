@@ -228,7 +228,33 @@ Open:
 
 ### Production Deployment
 
-For production deployment:
+For production deployment, configure environment variables in your deployment platform:
+
+#### Vercel Environment Variables
+
+1. Go to your Vercel project dashboard
+2. Navigate to Settings → Environment Variables
+3. Add the following variables:
+
+**Required:**
+- `GITHUB_TOKEN`: Your GitHub personal access token
+  - Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
+  - Generate a new token with `public_repo` scope
+  - Copy and paste the token
+
+- `GEMINI_API_KEY`: Your Gemini API key
+  - Go to Google AI Studio → API Keys
+  - Create a new API key
+  - Copy and paste the key
+
+**Optional:**
+- `CORAL_PATH`: Full path to Coral executable (if using Coral)
+- `NODE_ENV`: Set to `production`
+
+4. Select the environments (Production, Preview, Development) where each variable should be available
+5. Redeploy your project to apply the changes
+
+#### General Production Best Practices
 
 1. Use environment-specific configuration
 2. Enable additional security headers
@@ -290,11 +316,11 @@ npm run build
 
 1. Push your code to GitHub
 2. Import the project in Vercel
-3. Add environment variables in Vercel dashboard:
-   - `GITHUB_TOKEN`
-   - `GEMINI_API_KEY`
-   - `CORAL_PATH` (optional)
-   - `NODE_ENV=production`
+3. Add environment variables in Vercel dashboard (Settings → Environment Variables):
+   - `GITHUB_TOKEN` - Your GitHub API token
+   - `GEMINI_API_KEY` - Your Gemini API key
+   - `CORAL_PATH` - (optional) Path to Coral executable
+   - `NODE_ENV` - Set to `production`
 4. Deploy
 
 ### Docker
